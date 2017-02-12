@@ -17,3 +17,25 @@ impl Player {
     Player::default()
   }
 }
+
+impl HasHand for Player {
+  fn hand(&self) -> &[Card] {
+    &self.hand
+  }
+
+  fn hand_mut(&mut self) -> &mut Vec<Card> {
+    &mut self.hand
+  }
+}
+
+/// Trait for structs containing hands of cards.
+///
+/// This is most useful for creating a custom `Player`, since all methods use this trait instead of
+/// `Player` when operating on player-types.
+pub trait HasHand: Sized {
+  /// Gets the hand of this object, suitable for examination.
+  fn hand(&self) -> &[Card];
+
+  /// Gets the hand of this object, suitable for mutation.
+  fn hand_mut(&mut self) -> &mut Vec<Card>;
+}

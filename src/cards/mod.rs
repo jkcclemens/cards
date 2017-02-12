@@ -4,7 +4,7 @@ mod parts;
 pub use self::deck::*;
 pub use self::parts::*;
 
-use players::Player;
+use players::HasHand;
 
 use rand::{Rng, thread_rng};
 
@@ -78,13 +78,15 @@ pub trait Cards {
   ///
   /// Returns `true` if there were enough cards. Returns `false` and does not distribute any cards
   /// if there were not enough.
-  fn deal(&mut self, players: &mut [Player]) -> bool;
+  fn deal<P>(&mut self, players: &mut [P]) -> bool
+    where P: HasHand;
 
   /// Deals `n` cards to every player in `players`, removing them from the deck.
   ///
   /// Returns `true` if there were enough cards. Returns `false` and does not distribute any cards
   /// if there were not enough.
-  fn deal_many(&mut self, players: &mut [Player], n: usize) -> bool;
+  fn deal_many<P>(&mut self, players: &mut [P], n: usize) -> bool
+    where P: HasHand;
 }
 
 impl Cards for Vec<Card> {
@@ -114,22 +116,22 @@ impl Cards for Vec<Card> {
     thread_rng().shuffle(self);
   }
 
-  fn deal(&mut self, players: &mut [Player]) -> bool {
+  fn deal<P: HasHand>(&mut self, players: &mut [P]) -> bool {
     if self.len() < players.len() {
       return false;
     }
     for player in players {
-      player.hand.push(self.draw().unwrap());
+      player.hand_mut().push(self.draw().unwrap());
     }
     true
   }
 
-  fn deal_many(&mut self, players: &mut [Player], n: usize) -> bool {
+  fn deal_many<P: HasHand>(&mut self, players: &mut [P], n: usize) -> bool {
     if self.len() < players.len() * n {
       return false;
     }
     for player in players {
-      player.hand.append(&mut self.draw_many(n).unwrap());
+      player.hand_mut().append(&mut self.draw_many(n).unwrap());
     }
     true
   }

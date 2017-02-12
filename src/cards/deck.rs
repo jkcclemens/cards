@@ -1,5 +1,5 @@
 use cards::{Card, Cards, CardSuit, CardValue, JokerColor};
-use players::Player;
+use players::HasHand;
 
 /// A deck of cards
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -51,11 +51,11 @@ impl Cards for Deck {
     self.cards.peek_many(n)
   }
 
-  fn deal(&mut self, players: &mut [Player]) -> bool {
+  fn deal<P: HasHand>(&mut self, players: &mut [P]) -> bool {
     self.cards.deal(players)
   }
 
-  fn deal_many(&mut self, players: &mut [Player], n: usize) -> bool {
+  fn deal_many<P: HasHand>(&mut self, players: &mut [P], n: usize) -> bool {
     self.cards.deal_many(players, n)
   }
 }
