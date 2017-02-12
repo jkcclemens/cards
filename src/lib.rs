@@ -1,10 +1,14 @@
+//! cards is a library crate that implements playing cards, decks, and basic players.
+//!
+//! This crate also implements basic functions like dealing, drawing, and peeking.
+
 #![feature(try_from)]
 
 extern crate rand;
 
 macro_rules! iterable_enum {
-  ($name:ident $iter_name:ident, ($($der:ident),+) { $($variant:ident),* }) => (
-    #[derive($($der),*)]
+  ($(#[$struct_meta:meta])* enum $name:ident $iter_name:ident { $($variant:ident),* }) => (
+    $(#[$struct_meta])*
     pub enum $name { $($variant),* }
 
     impl $name {

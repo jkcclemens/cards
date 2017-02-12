@@ -1,9 +1,13 @@
+//! Card values
+
 use std::fmt::{Display, Formatter};
 use std::fmt::Result as FmtResult;
 use std::convert::TryFrom;
 
 iterable_enum! {
-  CardValue CardValueIter, (Debug, Clone, PartialEq, Eq, PartialOrd, Ord) {
+  /// The value of a normal card
+  #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+  enum CardValue CardValueIter {
     Ace,
     Two,
     Three,

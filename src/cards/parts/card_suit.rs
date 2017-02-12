@@ -1,9 +1,13 @@
+//! Card suits
+
 use std::fmt::{Display, Formatter};
 use std::fmt::Result as FmtResult;
 use std::convert::TryFrom;
 
 iterable_enum! {
-  CardSuit CardSuitIter, (Debug, Clone, PartialEq, Eq, PartialOrd, Ord) {
+  /// The suit of a normal card
+  #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+  enum CardSuit CardSuitIter {
     Hearts,
     Diamonds,
     Clubs,

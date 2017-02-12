@@ -1,9 +1,13 @@
+//! The color for jokers
+
 use std::fmt::{Display, Formatter};
 use std::fmt::Result as FmtResult;
 use std::convert::TryFrom;
 
 iterable_enum! {
-  JokerColor JokerColorIter, (Debug, PartialEq, Eq, PartialOrd, Ord) {
+  /// The color of a joker
+  #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+  enum JokerColor JokerColorIter {
     Red,
     Black
   }

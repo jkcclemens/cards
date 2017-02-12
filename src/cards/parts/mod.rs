@@ -1,3 +1,5 @@
+//! The parts of a card, like suits and values
+
 mod card_suit;
 mod card_value;
 mod joker_color;

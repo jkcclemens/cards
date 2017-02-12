@@ -8,13 +8,22 @@ use players::Player;
 
 use rand::{Rng, thread_rng};
 
+/// A playing card
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Card {
-  Normal { suit: CardSuit, value: CardValue },
+  /// A normal card
+  Normal {
+    /// The suit of the card
+    suit: CardSuit,
+    /// The value of the card
+    value: CardValue
+  },
+  /// A joker card and its color
   Joker(JokerColor)
 }
 
 impl Card {
+  /// Creates a new card of the given `suit` and `value`.
   pub fn new(suit: CardSuit, value: CardValue) -> Card {
     Card::Normal {
       value: value,
@@ -22,10 +31,12 @@ impl Card {
     }
   }
 
+  /// Creates a joker with the given `color`
   pub fn joker(color: JokerColor) -> Card {
     Card::Joker(color)
   }
 
+  /// Returns a representation of the card like "4♣"
   pub fn to_string(&self) -> String {
     match *self {
       Card::Normal { ref suit, ref value } => format!("{}{}", value, suit),
@@ -34,6 +45,7 @@ impl Card {
   }
 }
 
+/// Methods for working with collections of cards
 pub trait Cards {
   /// Draws a card from the deck, removing it from the deck.
   ///
@@ -43,7 +55,7 @@ pub trait Cards {
 
   /// Draws `n` cards from the top of the deck, removing them from the deck.
   ///
-  /// This will not draw cards unless there are enough to be drawn. This will return None if there
+  /// This will not draw cards unless there are enough to be drawn. This will return `None` if there
   /// are not enough cards, removing no cards.
   fn draw_many(&mut self, n: usize) -> Option<Vec<Card>>;
 
